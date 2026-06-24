@@ -1,7 +1,9 @@
-# frontend/pages/Dashboard.py
-
+import os
 import streamlit as st
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 st.set_page_config(
     page_title="AI School Future",
@@ -9,8 +11,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-API_URL = "http://127.0.0.1:8000/api"
-
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+API_URL = f"{BACKEND_URL}/api"
 # =========================================================
 # GUARD LOGIN
 # =========================================================
