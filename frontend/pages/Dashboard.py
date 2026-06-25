@@ -13,6 +13,7 @@ st.set_page_config(
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 API_URL = f"{BACKEND_URL}/api"
+
 # =========================================================
 # GUARD LOGIN
 # =========================================================
@@ -118,10 +119,7 @@ messages = st.session_state.chat_history[st.session_state.current_chat]
 
 
 # =========================================================
-# CSS / THEME DASHBOARD (FIXED APPEARANCE & FONT LOCK)
-# =========================================================
-# =========================================================
-# CSS / THEME DASHBOARD (STRICT FONT & BACKGROUND LOCK)
+# CSS / THEME DASHBOARD — RESPONSIVE FIXED
 # =========================================================
 st.markdown("""
 <style>
@@ -133,7 +131,7 @@ st.markdown("""
     }
 
     /* =========================================
-       APP / BACKGROUND UTAMA (DASHBOARD GELAP)
+       APP / BACKGROUND UTAMA
     ========================================= */
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
         background: linear-gradient(180deg, #071225 0%, #0b1730 100%) !important;
@@ -143,66 +141,60 @@ st.markdown("""
         background: transparent !important;
     }
 
-    .block-container {
-        padding-top: 1.5rem;
-        padding-bottom: 2rem;
-    }
-/* =========================================
-       TEXT AREA UTAMA (MAIN CONTENT - DIKUNCI TETAP PUTIH)
+    /* =========================================
+       BLOCK CONTAINER — RESPONSIVE PADDING
     ========================================= */
-    /* Menargetkan teks umum di main content agar tidak terpengaruh light mode */
-    [data-testid="stMain"] h1, 
-    [data-testid="stMain"] h2, 
-    [data-testid="stMain"] h3, 
-    [data-testid="stMain"] h4, 
-    [data-testid="stMain"] h5, 
+    .block-container {
+        padding-top: 1.5rem !important;
+        padding-bottom: 2rem !important;
+        padding-left: clamp(0.75rem, 3vw, 2.5rem) !important;
+        padding-right: clamp(0.75rem, 3vw, 2.5rem) !important;
+        max-width: 100% !important;
+    }
+
+    /* =========================================
+       TEXT AREA UTAMA — DIKUNCI TETAP PUTIH
+    ========================================= */
+    [data-testid="stMain"] h1,
+    [data-testid="stMain"] h2,
+    [data-testid="stMain"] h3,
+    [data-testid="stMain"] h4,
+    [data-testid="stMain"] h5,
     [data-testid="stMain"] h6,
-    [data-testid="stMain"] p, 
-    [data-testid="stMain"] span, 
-    [data-testid="stMain"] label, 
+    [data-testid="stMain"] p,
+    [data-testid="stMain"] span,
+    [data-testid="stMain"] label,
     [data-testid="stMain"] li {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
     }
-    /* =========================================
-       MENGUNCI TEKS CUSTOM HTML (STATS & JUDUL)
-    ========================================= */
+
     .stat-value,
     .stat-label,
     .section-title,
-    .section-subtitle,
-    .white-text h1,
-    .white-text p {
+    .section-subtitle {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-
-    /* !!! PENGECUALIAN: Kembalikan teks di dalam bubble AI agar TETAP HITAM GELAP !!! */
-    .ai-bubble,
-    .ai-bubble *,
-    .ai-bubble p,
-    .ai-bubble span,
-    .ai-bubble div {
-        color: #0f172a !important;
-        -webkit-text-fill-color: #0f172a !important;
     }
 
-    /* Kunci warna teks khusus caption & info di area utama */
-    [data-testid="stMain"] .stCaption, 
-    [data-testid="stMain"] .stCaption span, 
+    [data-testid="stMain"] .stCaption,
+    [data-testid="stMain"] .stCaption span,
     [data-testid="stMain"] small {
         color: #cbd5e1 !important;
         -webkit-text-fill-color: #cbd5e1 !important;
     }
 
     /* =========================================
-       SIDEBAR (DIKUNCI BACKGROUND TERANG & TEXT GELAP)
+       SIDEBAR — DIKUNCI TERANG
     ========================================= */
     section[data-testid="stSidebar"] {
         background: #f8fafc !important;
         border-right: 1px solid #dbe2ea !important;
+        /* Lebar sidebar lebih ramping di layar kecil */
+        min-width: clamp(200px, 22vw, 280px) !important;
+        max-width: clamp(200px, 22vw, 280px) !important;
     }
 
-    /* Memaksa semua elemen teks di dalam sidebar berwarna gelap */
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3,
@@ -214,8 +206,7 @@ st.markdown("""
         color: #0f172a !important;
         -webkit-text-fill-color: #0f172a !important;
     }
-    
-    /* Mengatasi teks menu "Dashboard" bawaan Streamlit yang memutih */
+
     section[data-testid="stSidebar"] [data-testid="stSidebarNavItems"] * {
         color: #0f172a !important;
         -webkit-text-fill-color: #0f172a !important;
@@ -227,7 +218,7 @@ st.markdown("""
     }
 
     /* =========================================
-       INPUT / SELECTBOX / MULTISELECT (BACKGROUND TERANG, TEXT GELAP)
+       INPUT / SELECTBOX / MULTISELECT
     ========================================= */
     div[data-baseweb="input"] > div,
     div[data-baseweb="select"] > div,
@@ -238,7 +229,6 @@ st.markdown("""
         box-shadow: none !important;
     }
 
-    /* Mengunci teks di dalam form/inputan agar tetap hitam gelap */
     [data-testid="stMain"] div[data-baseweb="input"] input,
     [data-testid="stMain"] .stTextArea textarea,
     [data-testid="stMain"] div[data-baseweb="select"] *,
@@ -255,7 +245,6 @@ st.markdown("""
         opacity: 1 !important;
     }
 
-    /* Dropdown popup selectbox */
     div[role="listbox"] {
         background: #ffffff !important;
         border-radius: 12px !important;
@@ -270,7 +259,6 @@ st.markdown("""
         background: #eff6ff !important;
     }
 
-    /* Chip/Tag pada Multiselect */
     .stMultiSelect [data-baseweb="tag"] {
         background: #ef4444 !important;
         border-radius: 8px !important;
@@ -282,35 +270,90 @@ st.markdown("""
     }
 
     /* =========================================
-       TABS (DIKUNCI AGAR TETAP TERBACA)
+       TABS
     ========================================= */
     [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: clamp(4px, 1.5vw, 10px);
+        flex-wrap: wrap;
     }
 
     [data-baseweb="tab"] {
         background: rgba(255,255,255,0.08) !important;
         border-radius: 12px !important;
-        padding: 10px 18px !important;
+        padding: clamp(7px, 1.5vw, 10px) clamp(10px, 2.5vw, 18px) !important;
         border: 1px solid rgba(255,255,255,0.08) !important;
     }
-    
-    [data-baseweb="tab"] div, [data-baseweb="tab"] span {
+
+    [data-baseweb="tab"] div,
+    [data-baseweb="tab"] span {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
+        font-size: clamp(13px, 2vw, 15px) !important;
     }
 
     [aria-selected="true"][data-baseweb="tab"] {
         background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%) !important;
         border: none !important;
     }
-    
+
     [aria-selected="true"][data-baseweb="tab"] * {
         font-weight: 700 !important;
     }
 
+    /* =========================================
+       STAT CARDS — RESPONSIVE GRID
+    ========================================= */
+    .stat-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 16px;
+        padding: clamp(14px, 3vw, 20px);
+        text-align: center;
+        margin-bottom: 8px;
+    }
 
-       CHAT SYSTEM BULB
+    .stat-icon {
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        margin-bottom: 6px;
+    }
+
+    .stat-value {
+        font-size: clamp(1.4rem, 3.5vw, 2rem);
+        font-weight: 800;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        font-size: clamp(11px, 1.8vw, 13px);
+        color: #94a3b8 !important;
+        -webkit-text-fill-color: #94a3b8 !important;
+    }
+
+    /* =========================================
+       PANEL CARD
+    ========================================= */
+    .panel-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: clamp(14px, 3vw, 20px);
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+        font-size: clamp(12px, 1.8vw, 14px);
+        color: #94a3b8 !important;
+        -webkit-text-fill-color: #94a3b8 !important;
+    }
+
+    /* =========================================
+       CHAT BUBBLE
     ========================================= */
     .chat-wrapper {
         width: 100%;
@@ -324,19 +367,14 @@ st.markdown("""
         margin-bottom: 12px;
     }
 
-    .chat-user {
-        justify-content: flex-end;
-    }
-
-    .chat-ai {
-        justify-content: flex-start;
-    }
+    .chat-user { justify-content: flex-end; }
+    .chat-ai   { justify-content: flex-start; }
 
     .bubble {
-        padding: 12px 16px;
+        padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 16px);
         border-radius: 18px;
         max-width: 90%;
-        font-size: 15px;
+        font-size: clamp(13px, 2vw, 15px);
         line-height: 1.5;
         word-wrap: break-word;
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -346,7 +384,7 @@ st.markdown("""
         background: linear-gradient(135deg, #2563eb, #3b82f6);
         border-bottom-right-radius: 4px;
     }
-    
+
     .user-bubble * {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
@@ -357,7 +395,11 @@ st.markdown("""
         border-bottom-left-radius: 4px;
     }
 
-    .ai-bubble * {
+    .ai-bubble,
+    .ai-bubble *,
+    .ai-bubble p,
+    .ai-bubble span,
+    .ai-bubble div {
         color: #0f172a !important;
         -webkit-text-fill-color: #0f172a !important;
     }
@@ -379,7 +421,7 @@ st.markdown("""
     }
 
     /* =========================================
-       ALERT & PROGRESS BAR
+       ALERT & PROGRESS
     ========================================= */
     [data-testid="stAlert"] * {
         color: inherit !important;
@@ -391,16 +433,88 @@ st.markdown("""
     }
 
     /* =========================================
-       CHAT INPUT BAWAH (TEXT GELAP)
+       CHAT INPUT
     ========================================= */
     [data-testid="stChatInput"] textarea {
         color: #0f172a !important;
         -webkit-text-fill-color: #0f172a !important;
         background: #f8fafc !important;
+        font-size: clamp(13px, 2vw, 15px) !important;
     }
 
     [data-testid="stChatInput"] {
         background: transparent !important;
+    }
+
+    /* =========================================
+       MAIN HEADER — RESPONSIVE FONT
+    ========================================= */
+    [data-testid="stMain"] h1 {
+        font-size: clamp(1.4rem, 4vw, 2rem) !important;
+    }
+
+    [data-testid="stMain"] h3 {
+        font-size: clamp(1rem, 2.5vw, 1.3rem) !important;
+    }
+
+    /* =========================================
+       MOBILE — ≤ 640px
+    ========================================= */
+    @media screen and (max-width: 640px) {
+        /* Sidebar otomatis collapse di mobile — hanya perkecil padding kalau terbuka */
+        section[data-testid="stSidebar"] {
+            min-width: 240px !important;
+            max-width: 240px !important;
+        }
+
+        /* Kolom stats: susun vertikal di mobile */
+        [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            padding: 14px 16px;
+        }
+
+        .stat-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            margin-bottom: 0;
+        }
+
+        .bubble {
+            max-width: 95%;
+        }
+
+        .block-container {
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+        }
+    }
+
+    /* =========================================
+       TABLET — 641–900px
+    ========================================= */
+    @media screen and (min-width: 641px) and (max-width: 900px) {
+        /* Kolom stats: 2 kolom di tablet */
+        [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+            flex: 1 1 48% !important;
+            min-width: 48% !important;
+        }
+
+        section[data-testid="stSidebar"] {
+            min-width: 210px !important;
+            max-width: 210px !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -516,17 +630,14 @@ with tab1:
     </div>
     """, unsafe_allow_html=True)
 
-    # Gunakan container biasa untuk area chat
     chat_container = st.container()
-    
+
     with chat_container:
         for msg in messages:
-            # Menggunakan UI Chat bawaan asli Streamlit
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
 
     if st.session_state.is_loading:
-        # Menampilkan status loading di dalam bubble AI
         with st.chat_message("assistant"):
             st.markdown("🤖 *AI sedang menganalisis...*")
 
@@ -620,7 +731,6 @@ with tab2:
                     q["options"],
                     key=f"q_{i}"
                 )
-                # ambil huruf depan A/B/C/D
                 answers.append(ans[0])
 
             submit_tryout = st.form_submit_button("📊 Submit Hasil Tryout", type="primary")
@@ -752,7 +862,6 @@ Kemampuan kamu sudah sangat baik dan peluang masuk kampus impian juga besar.
     if analisis:
         hasil = []
 
-        # Teknik Informatika
         if "Teknologi" in minat or "Coding" in hobi:
             hasil.append({
                 "jurusan": "Sarjana Teknik Informatika",
@@ -761,7 +870,6 @@ Kemampuan kamu sudah sangat baik dan peluang masuk kampus impian juga besar.
                 "karier": ["Software Engineer", "Web Developer", "AI Engineer", "Cyber Security"]
             })
 
-        # Bisnis Digital
         if "Bisnis" in minat:
             hasil.append({
                 "jurusan": "Sarjana Bisnis Digital",
@@ -770,7 +878,6 @@ Kemampuan kamu sudah sangat baik dan peluang masuk kampus impian juga besar.
                 "karier": ["Digital Marketer", "Business Analyst", "Entrepreneur", "Content Strategist"]
             })
 
-        # Game Development
         if "Game" in hobi:
             hasil.append({
                 "jurusan": "Sarjana Game Development",
@@ -779,7 +886,6 @@ Kemampuan kamu sudah sangat baik dan peluang masuk kampus impian juga besar.
                 "karier": ["Game Developer", "Game Designer", "3D Artist", "Game Programmer"]
             })
 
-        # Desain
         if "Desain" in minat or "Menggambar" in hobi:
             hasil.append({
                 "jurusan": "Desain Komunikasi Visual",
@@ -842,7 +948,6 @@ if st.session_state.is_loading:
     except Exception:
         response = "Tidak dapat terhubung ke server. Pastikan backend sudah berjalan."
 
-    # Simpan ke DB
     try:
         if st.session_state.last_user_message:
             requests.post(
