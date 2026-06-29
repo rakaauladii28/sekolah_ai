@@ -11,7 +11,12 @@ load_dotenv()
 
 # Ambil URL database dari .env
 DATABASE_URL = os.getenv("DATABASE_URL")
-
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgres://",
+        "postgresql://",
+        1
+    )
 # Validasi — kalau .env belum diisi, langsung error yang jelas
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL belum diset di file .env")
